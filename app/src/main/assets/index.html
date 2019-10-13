@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8"> 
+    <title>菜鸟教程(runoob.com)</title> 
+</head>
+<body>
+    姓名: <input type="text" name="firstname" id="firstname" ><br>
+    身份证号: <input type="text" name="lastname"  id="certificate" onfocus="toastKeyboard()" onblur="hidePasswordKeyboard()">
+    <br/>
+    <button id="set" onclick="inputx('s')">set</button>
+    <br/>
+    <button id="del" onclick="del()">del</button>
+
+<script>
+    //安卓需要调用的方法
+    function inputx(y){
+        var identification=document.getElementById("certificate");
+        var certmp=identification.value;
+        identification.value=certmp+y;
+    }
+    function del(){
+        var identification1=document.getElementById("certificate");
+        var certmp1=identification1.value;
+        var ccc=certmp1.substring(0,certmp1.length-1);
+        identification1.value=ccc;
+    }
+    function toastKeyboard(){
+        window.Android.toastKeyboard();
+    }
+    function hidePasswordKeyboard(){
+        window.Android.hindKeyboard();
+    }
+    function lostfocus(){
+        document.activeElement.blur();
+    }
+</script>
+<p><b>注意：</b> 表单本身是不可见的。并且注意一个文本字段的默认宽度是20个字符。</p>
+
+</body>
+</html>
