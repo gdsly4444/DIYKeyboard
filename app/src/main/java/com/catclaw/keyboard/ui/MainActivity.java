@@ -1,13 +1,16 @@
 package com.catclaw.keyboard.ui;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -17,16 +20,20 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.catclaw.keyboard.R;
+import com.catclaw.keyboard.keyboard.CertificationInputActivity;
 
 public class MainActivity extends AppCompatActivity {
     WebView webView;
     private ProgressBar progressBar;
+    private int toInputRequestCode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initWebView();
     }
+
+
     @SuppressLint("JavascriptInterface")
     public void initWebView(){
         webView=findViewById(R.id.web_view);
@@ -91,4 +98,37 @@ public class MainActivity extends AppCompatActivity {
             progressBar.setProgress(newProgress);
         }
     };
+
+
+    @JavascriptInterface
+    public void getDataFromInputactivity(int requestCode){
+        System.out.println("gaodisen:requestCode="+requestCode);
+        Intent intent=new Intent(MainActivity.this, CertificationInputActivity.class);
+        if (requestCode==1){
+            intent.putExtra("jumpSource",1);
+        }else{
+            intent.putExtra("jumpSource",2);
+        }
+        startActivityForResult(intent,requestCode);
+    }
+
+    public void setElementValue(String elementName,String elementValue){
+        String requestString="javascript:setInputElementValue('"+elementName+"','"+elementValue+"')";
+        System.out.println("gaodisen:---><requestsTRING>"+requestString);
+        webView.loadUrl(requestString);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==1){
+            //此时直接设置姓名值
+            String returnString=data.getStringExtra("backInput");
+            setElementValue("firstname",returnString);
+        }else if (requestCode==2){
+            //此时直接设置账号值
+            String returnString=data.getStringExtra("backInput");
+            setElementValue("certificate",returnString);
+        }
+    }
 }

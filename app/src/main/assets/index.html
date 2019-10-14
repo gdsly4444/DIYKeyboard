@@ -4,8 +4,9 @@
     <title>菜鸟教程(runoob.com)</title> 
 </head>
 <body>
-    姓名: <input type="text" name="firstname" id="firstname" ><br>
-    身份证号: <input type="text" name="lastname"  id="certificate" onfocus="toastKeyboard()" onblur="hidePasswordKeyboard()">
+    姓名: <input type="text" name="firstname" readonly="true" id="firstname" onclick="toastInputActivity(1)" >
+    <br>
+    身份证号: <input type="text" name="lastname"  readonly="true" id="certificate" onclick="toastInputActivity(2)">
     <br/>
     <button id="set" onclick="inputx('s')">set</button>
     <br/>
@@ -13,6 +14,12 @@
 
 <script>
     //安卓需要调用的方法
+    function setInputElementValue(elementName,elementValue){
+        //这里elementName有两种取值：firstname和certificate
+        var identification=document.getElementById(elementName);
+        identification.value=elementValue;
+    }
+
     function inputx(y){
         var identification=document.getElementById("certificate");
         var certmp=identification.value;
@@ -33,8 +40,11 @@
     function lostfocus(){
         document.activeElement.blur();
     }
+    function toastInputActivity(c){
+        window.Android.getDataFromInputactivity(c);
+    }
 </script>
-<p><b>注意：</b> 表单本身是不可见的。并且注意一个文本字段的默认宽度是20个字符。</p>
+<p><b>注意：</b> 这是一个webView弹出软键盘的测试工具页</p>
 
 </body>
 </html>
