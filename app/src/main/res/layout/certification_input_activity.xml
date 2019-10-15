@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:id="@+id/main_root"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/scroll_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
     <EditText
         android:id="@+id/ed_input"
         android:layout_weight="4"
+        android:gravity="top|left"
+        android:hint="text"
         android:layout_width="0dp"
         android:layout_height="match_parent"/>
     <Button
@@ -13,6 +21,14 @@
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="下一项"
         />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/keyboardPlace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical" />
 </LinearLayout>
